@@ -27,7 +27,7 @@ export default defineConfig({
 
   plugins: [
     {
-      name: 'astro-like-routing',
+      name: 'avrint-lean-routing',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           const [rawPath, query] = req.url.split('?');
