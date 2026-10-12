@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import { readdirSync } from 'node:fs';
+import tailwindcss from '@tailwindcss/vite'
+
+
 
 // Automatically discover all .html files inside src/
 function getHtmlInputs(srcDir) {
@@ -29,4 +32,7 @@ export default defineConfig({
       input: getHtmlInputs(srcDir),
     },
   },
+  plugins: [
+    tailwindcss(),
+  ],
 });

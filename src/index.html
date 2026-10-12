@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite Web Component Demo</title>
-    <script type="module" src="./components/test-component.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Vite + Web Components</h1>
-      <my-element></my-element>
-    </div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite Web Component Demo</title>
+  <!-- <style>
+    /* Hide page until Web Components resolve */
+    body:has(:not(:defined)) {
+      opacity: 0;
+      }
+      
+      body {
+        transition: opacity 0.2s ease-in;
+        }
+      </style> -->
+  <link href="./style/main.css" rel="stylesheet">
+</head>
+
+<body class="bg-amber-500">
+  <div id="app">
+    <h1>Vite + Web Components</h1>
+    <test-component></test-component>
+  </div>
+  <script type="module" src="./components/TestComponent.js"></script>
+</body>
+
 </html>

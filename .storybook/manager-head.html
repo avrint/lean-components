@@ -1,0 +1,23 @@
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<style>
+  /* Hide the sidebar tag filter button/dropdown */
+  #storybook-sidebar-region div[role*="search"],
+  #storybook-sidebar-region button[aria-label*="Show new stories since last commit"] {
+    display: none !important;
+  }
+
+  /* Hide the sidebar settings button */
+  button[title*="Settings"],
+  button[aria-label*="Settings"] {
+    display: none !important;
+  }
+
+
+  [role="toolbar"] button[aria-label*="Preview background"] {
+    /* display: none !important; */
+  }
+
+  body {
+    background: '#000000' !important;
+  }
+</style>
