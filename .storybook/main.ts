@@ -9,7 +9,7 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
-    "@storybook/addon-docs"
+    "@storybook/addon-docs",
   ],
   framework: {
     name: '@storybook/web-components-vite',
@@ -18,10 +18,11 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     return mergeConfig(config, {
       resolve: {
-        alias: {
-          '/components': '/src/components',
-          '/style': '/src/style',
-        },
+        alias: [
+          { find: '/components', replacement: '/src/components' },
+          { find: '/style', replacement: '/src/style' },
+          // 🚀 Redirect the broken CJS shim straight to React's native ESM export
+        ],
       },
       plugins: [
         tailwindcss()
@@ -29,12 +30,10 @@ const config: StorybookConfig = {
       // 🚀 This tells Vite to ignore Storybook's internal subpaths during pre-bundling
       optimizeDeps: {
         ...config.optimizeDeps,
+
         exclude: [
           ...(config.optimizeDeps?.exclude || []),
-          'storybook',
-          '@storybook/blocks',
-          '@storybook/addon-docs',
-          '@storybook/theming'
+
         ],
       },
     });

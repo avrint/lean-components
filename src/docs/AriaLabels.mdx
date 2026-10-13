@@ -1,0 +1,100 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Aria State & Property Cheat Sheet" />
+
+# ARIA State & Property Cheat Sheet
+
+This design system reference maps WAI-ARIA functional states and properties to their corresponding JavaScript DOM IDL properties (`elem.aria*`) for use across your web components and styling layers.
+
+## State & Property Mapping Reference
+
+
+<table >
+   <thead>
+   <tr>
+      <th>ARIA Attribute (HTML)</th>
+      <th>JS DOM Property (<code>elem...</code>)</th>
+      <th>Description & Common Values</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr>
+      <td><code>aria-expanded</code></td>
+      <td><code>elem.ariaExpanded</code></td>
+      <td>Indicates if a collapsible region is expanded.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-hidden</code></td>
+      <td><code>elem.ariaHidden</code></td>
+      <td>Hides the element from assistive tech trees.<br/><code>"true"</code>, <code>"false"</code>, <code>"undefined"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-selected</code></td>
+      <td><code>elem.ariaSelected</code></td>
+      <td>Indicates if an item in a list/tab group is selected.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-checked</code></td>
+      <td><code>elem.ariaChecked</code></td>
+      <td>Indicates state of checkboxes, switches, or toggles.<br/><code>"true"</code>, <code>"false"</code>, <code>"mixed"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-pressed</code></td>
+      <td><code>elem.ariaPressed</code></td>
+      <td>Indicates the toggle push state of a button.<br/><code>"true"</code>, <code>"false"</code>, <code>"mixed"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-current</code></td>
+      <td><code>elem.ariaCurrent</code></td>
+      <td>Indicates the active item in a set (e.g., active page/step).<br/><code>"page"</code>, <code>"step"</code>, <code>"location"</code>, <code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-disabled</code></td>
+      <td><code>elem.ariaDisabled</code></td>
+      <td>Indicates an element is perceivable but disabled.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-invalid</code></td>
+      <td><code>elem.ariaInvalid</code></td>
+      <td>Indicates input value doesn't conform to expected format.<br/><code>"true"</code>, <code>"false"</code>, <code>"grammar"</code>, <code>"spelling"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-required</code></td>
+      <td><code>elem.ariaRequired</code></td>
+      <td>Indicates form input is mandatory prior to submission.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-readonly</code></td>
+      <td><code>elem.ariaReadonly</code></td>
+      <td>Indicates field content cannot be modified by user.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-haspopup</code></td>
+      <td><code>elem.ariaHasPopup</code></td>
+      <td>Indicates element triggers an interactive popup menu/dialog.<br/><code>"true"</code>, <code>"menu"</code>, <code>"dialog"</code>, <code>"listbox"</code>, etc.</td>
+   </tr>
+   <tr>
+      <td><code>aria-modal</code></td>
+      <td><code>elem.ariaModal</code></td>
+      <td>Indicates if a dialog traps focus and acts as a modal overlay.<br/><code>"true"</code>, <code>"false"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-sort</code></td>
+      <td><code>elem.ariaSort</code></td>
+      <td>Indicates sorting direction of a table column header.<br/><code>"ascending"</code>, <code>"descending"</code>, <code>"none"</code>, <code>"other"</code></td>
+   </tr>
+   <tr>
+      <td><code>aria-orientation</code></td>
+      <td><code>elem.ariaOrientation</code></td>
+      <td>Indicates horizontal or vertical layout configuration.<br/><code>"horizontal"</code>, <code>"vertical"</code></td>
+   </tr>
+   </tbody>
+</table>
+
+
+---
+
+## Architecture & Styling Rules
+
+* Explicit String Values: Setting state properties via JavaScript requires explicit string values rather than raw booleans. Example: Right: `elem.ariaExpanded = "true"` Wrong: `elem.ariaExpanded = true`
+* Tailwind CSS Integration: Hook directly into these standardized states using Tailwind's built-in modifiers instead of redundant custom selectors. Example: Right: `aria-expanded:block` Wrong: `data-[expanded]:block`

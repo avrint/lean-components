@@ -1,10 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 
 const meta: Meta = {
   title: 'Design System/Colors',
-  parameters: {
-    options: { showPanel: false },
-  },
+  tags: ["kitchensink"]
 };
 
 export default meta;

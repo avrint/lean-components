@@ -6,7 +6,7 @@ export default {
   argTypes: {
     title: { control: 'text' },
   },
-  tags: ["kitchensink"]
+  tags: ["test"]
 };
 
 export const Default = {

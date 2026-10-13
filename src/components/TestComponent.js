@@ -1,9 +1,9 @@
-export class TestComponent extends HTMLElement {
-  static get observedAttributes() {
+customElements.define('test-component', class TestComponent extends HTMLElement {
+  static get observedAttributes () {
     return ['title'];
   }
 
-  connectedCallback() {
+  connectedCallback () {
     // 1. Render the HTML shell ONCE
     if (!this._initialized) {
       this.innerHTML = `
@@ -22,7 +22,7 @@ export class TestComponent extends HTMLElement {
     this._updateTitle(this.getAttribute('title'));
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue === newValue) return;
 
     if (name === 'title') {
@@ -31,13 +31,9 @@ export class TestComponent extends HTMLElement {
   }
 
   // Surgically update only the h2 text node
-  _updateTitle(value) {
+  _updateTitle (value) {
     if (this._titleEl) {
       this._titleEl.textContent = value || 'Default Title';
     }
   }
-}
-
-if (!customElements.get('test-component')) {
-  customElements.define('test-component', TestComponent);
-}
+});

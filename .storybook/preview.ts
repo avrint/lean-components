@@ -1,35 +1,60 @@
-import type { Preview, StoryContext } from "@storybook/web-components";
+import type { Preview, StoryContext } from "@storybook/web-components-vite";
 //@ts-expect-error
-import '../src/style/main.css';
-import '../src/components/ReactiveElement.js'
-
-import { html, nothing } from 'lit';
+import './docs.css';
+import React, { useEffect } from 'react';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
 
 let lastBg = "";
+
+const applyThemeGlobals = (globals: any) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  const { cssTheme, backgroundColor } = globals || {};
+
+  if (cssTheme) {
+    root.setAttribute('data-theme', cssTheme);
+  } else {
+    root.removeAttribute('data-theme');
+  }
+
+  if (backgroundColor && backgroundColor !== lastBg) {
+    root.classList.add(`bg-${backgroundColor}`);
+    if (lastBg !== "") {
+      root.classList.remove(`bg-${lastBg}`);
+    }
+    lastBg = backgroundColor;
+  }
+};
+
+const CustomDocsContainer = (props: any) => {
+  const { context, children } = props;
+  const currentGlobals = context?.store?.userGlobals?.globals || context?.globals || {};
+
+  useEffect(() => {
+    applyThemeGlobals(currentGlobals);
+  }, [currentGlobals]);
+
+  const bgClass = currentGlobals.backgroundColor ? `!bg-${currentGlobals.backgroundColor}` : '';
+
+  //bg-neutral
+  return React.createElement(
+    DocsContainer,
+    props,
+    React.createElement(
+      'div',
+      {
+        className: `!p-4 sb-unstyled text-accent-950 !${bgClass} sbdocs-layout-override`,
+      },
+      children
+    )
+  );
+};
+
 const preview: Preview = {
   decorators: [
     (story, context) => {
-      const root = document.documentElement;
-      const { cssTheme, backgroundColor } = context.globals;
-      // console.info(backgroundColor, story, context);
-
-      if (cssTheme) {
-        root.setAttribute('data-theme', cssTheme);
-      } else {
-        // Handles the "Clear" menu option by removing the attribute entirely
-        root.removeAttribute('data-theme');
-      }
-      console.info(backgroundColor);
-      if (backgroundColor != "" && backgroundColor !== lastBg) {
-        root.classList.add(`bg-${backgroundColor}`)
-        if (lastBg !== "") {
-          root.classList.remove(`bg-${lastBg}`)
-        }
-        lastBg = backgroundColor;
-      }
-
+      applyThemeGlobals(context.globals);
       return story();
-
     },
   ],
   globalTypes: {
@@ -55,28 +80,24 @@ const preview: Preview = {
         icon: 'photo',
         title: '',
         dynamicTitle: false,
-        // bg-[#ffffff] bg-[#000000] bg-[#1b1c1d]
         items: [
-          { value: '[#1b1c1d]', title: 'bg-neutral' },
-          { value: '[#000000]', title: 'bg-black' },
-          { value: '[#ffffff]', title: 'bg-white' },
-          { value: 'slate-100', title: 'bg-slate-100'  },
-          { value: 'slate-800', title: 'bg-slate-800'},
-          { value: 'gray-500', title: 'bg-gray-500'},
+          { value: 'neutral-200', title: 'bg-neutral-200' },
+          { value: 'black', title: 'bg-black' },
+          { value: 'white', title: 'bg-white' },
+          { value: 'slate-100', title: 'bg-slate-100' },
+          { value: 'slate-800', title: 'bg-slate-800' },
+          { value: 'gray-500', title: 'bg-gray-500' },
           { value: 'accent-600', title: 'bg-accent-600' },
         ],
       },
     },
   },
   initialGlobals: {
-    background: '#000000',
-    backgroundColor: '[#1b1c1d]',
+    backgroundColor: 'neutral-200',
   },
   parameters: {
     backgrounds: {
-      // 2. Define or override options using key-value objects
-      options: [
-      ]
+      options: []
     },
     controls: {
       matchers: {
@@ -85,6 +106,7 @@ const preview: Preview = {
       },
     },
     docs: {
+      container: CustomDocsContainer,
       codePanel: true,
       canvas: {
         sourceState: 'shown',
@@ -92,7 +114,6 @@ const preview: Preview = {
       source: {
         type: 'dynamic',
         transform: (source: string, storyContext: StoryContext) => {
-          // console.info(storyContext)
           const theme = storyContext?.globals?.cssTheme;
           const cleanSource = typeof source === 'string' ? source : '';
 
@@ -104,8 +125,7 @@ const preview: Preview = {
 </head>
 <body>
   ${cleanSource}
-  <script type="module" src="${storyContext?.parameters.fileName.replace(".stories", "")}"></script>
-
+  <script type="module" src="${storyContext?.parameters.fileName?.replace(".stories", "")}"></script>
 </body>
 </html>`;
         },

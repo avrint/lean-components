@@ -1,0 +1,29 @@
+@import '../src/style/main.css';
+
+.sbdocs-wrapper {
+  @apply !bg-transparent !flex !min-h-screen !box-border !gap-12 !p-0;
+}
+
+.sbdocs-wrapper table {
+  @apply my-6 border border-accent-500 w-full border-collapse text-left text-sm;
+}
+
+.sbdocs-wrapper table thead tr {
+  @apply font-semibold text-accent-400 border-accent-500 border-b;
+}
+
+.sbdocs-wrapper table th {
+  @apply py-3 px-4;
+}
+
+.sbdocs-wrapper table tbody tr {
+  @apply transition-colors border-accent-500 not-last:border-b;
+}
+
+.sbdocs-wrapper table tbody tr:hover {
+  @apply hover:bg-accent-400/10;
+}
+
+.sbdocs-wrapper table td {
+  @apply py-3 px-4 ;
+}
