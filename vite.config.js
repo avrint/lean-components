@@ -3,8 +3,6 @@ import { resolve } from 'node:path';
 import { readdirSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite'
 
-
-
 // Automatically discover all .html files inside src/
 function getHtmlInputs(srcDir) {
   const files = readdirSync(srcDir, { recursive: true });
