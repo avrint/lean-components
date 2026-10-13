@@ -43,7 +43,7 @@ const CustomDocsContainer = (props: any) => {
     React.createElement(
       'div',
       {
-        className: `!p-4 sb-unstyled text-accent-950 !${bgClass} sbdocs-layout-override`,
+        className: `!p-4 sb-unstyled text-gray-950  sbdocs-layout-override`,
       },
       children
     )
