@@ -10,29 +10,26 @@ export default {
   tags: ["test"]
 };
 
+const render = (args) =>{
+    return html`<task-list ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>`;
+  }
+
 export const Default = {
   args: {
-    title: "Default Title",
-    buttonText: "AddTask",
-    static: false
+    title: "",
+    buttonText: "",
   },
   render: (args) => {
-    return html`
-    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>
-    `;
+    return render(args);
   },
 };
-
 
 export const Static = {
   args: {
     title: "Static Elem",
     buttonText: "AddTask",
-    static: true
   },
   render: (args) => {
-    return html`
-    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>
-    `;
+    return render(args);
   },
 };

@@ -10,106 +10,53 @@
 });
 // --- PASTED LIT-HTML BUNDLE END ---
 
-// 'import' from the lit_html bundle
 const { html, render } = lit_html;
+
+// Optional: Import your compiled Tailwind CSS string using Vite's ?inline query
+import tailwindCssString from '../style/components.css?inline';
+const tailwindStyles = new CSSStyleSheet();
+tailwindStyles.replaceSync(tailwindCssString);
 
 export class BaseComponent extends HTMLElement {
 
   html = html;
 
-  /**
-   * Returns a mapping of attribute names to their corresponding element selectors.
-   * These selectors are used to automatically update the element's text content when the attribute changes.
-   * 
-   * @returns An object where keys are attribute names and values are CSS selectors targeting the elements to update.
-   * 
-   * Example:
-   * ```js
-   * return {
-   *   'title': '.t-title',
-   *   'button-text': '.btn-add'
-   * };
-   * ```
-   */
   static get attributeSelectors () {
     return {};
   }
 
-  /**
-   * Returns an array of event types that the component should observe.
-   * These events are used to automatically add the event listeners to the event watcher.
-   * 
-   * @returns An array of event types.
-   * 
-   * Example:
-   * ```js
-   * return ['click', 'mouseover'];
-   * ```
-   */
   static get observedEvents () {
     return [];
   }
 
-  /**
-   * > **WARNING DO NOT OVERRIDE** 
-   * 
-   * This method is automatically generated based on the `attributeSelectors` property.
-   * The base class handles attribute updates using this method.
-   * 
-   * @returns {string[]} An array of attribute names to observe.
-   */
   static get observedAttributes () {
     return Object.keys(this.attributeSelectors);
   }
 
-  /**
-   * Handles attribute changes by updating the corresponding element's text content.
-   * 
-   * @param {string} name The name of the attribute that changed.
-   * @param {string} oldVal The old value of the attribute.
-   * @param {string} newVal The new value of the attribute.
-   */
   attributeChangedCallback (_name, oldVal, newVal) {
     if (oldVal === newVal) return;
-    // const selector = this.constructor.attributeSelectors[name];
-    // const el = selector ? this.querySelector(selector) : null;
-
-    // if (el) {
-    //   el.textContent = newVal;
-    // }
-
-    if (typeof this.render === 'function') {
-      render(this.render(), this);
-    }
-
+    this._render();
   }
 
-  /**
-   * Initializes the component.
-   * This method is called when the element is inserted into a document.
-   */
   constructor() {
     super();
+    // 1. Enable Shadow DOM encapsulation
+    this.attachShadow({ mode: 'open' });
+
+    // 2. Adopt Tailwind styles automatically if configured
+    if (typeof tailwindStyles !== 'undefined') {
+      this.shadowRoot.adoptedStyleSheets = [tailwindStyles];
+    }
   }
 
-  /**
-   * @private Sets up event listeners for the component.
-   * 
-   * @param {string} type The type of event to listen for.
-   * 
-   * > Note: This method is used to handle custom events and delegate them to the appropriate handlers.
-   * 
-   * @example In the consuming class:
-   * ```js
-   * handleEvent (e) {
-   *   if (e.type === "click" && e.target.closest('.btn-add')) {
-   *     this.handleButtonClick(e);
-   *   }
-   * }
-   * ```
-   */
   _listen (type) {
     this.addEventListener(type, this);
+  }
+
+  _render () {
+    if (typeof this.render === 'function') {
+      render(this.render(), this.shadowRoot);
+    }
   }
 
   connectedCallback () {
@@ -117,24 +64,58 @@ export class BaseComponent extends HTMLElement {
       this._listen(event);
     });
 
-    if (typeof this.render === 'function') {
-      render(this.render(), this);
-    }
-
-    this.observer = new MutationObserver(() => {
-      if (this.hasAttribute('static')) return;
-
-      this.observer.disconnect();
-      if (typeof this.render === 'function') {
-        render(this.render(), this);
-      }
-      this.observer.observe(this, { childList: true, subtree: true });
-    });
-
-    this.observer.observe(this, { childList: true, subtree: true });
+    this._render();
   }
 
   disconnectedCallback () {
-    this.observer.disconnect();
+    // No more MutationObserver needed! Clean teardown.
+  }
+
+  /**
+   * Native slot change handler to support progressive enhancement updates.
+   * Use `@slotchange="${this.handleSlotChange}"` on your slots.
+   */
+  handleSlotChange () {
+    this._render();
+  }
+
+  /**
+   * Registers a delegated event handler for the component.
+   * Can be called multiple times in the subclass constructor.
+   * 
+   * @param {string} type The event type (e.g., 'click')
+   * @param {string} selector The CSS selector to match against
+   * @param {Function} callback The handler function: (e, target) => {}
+   */
+  event (type, selector, callback) {
+    if (!this._eventHandlers) {
+      this._eventHandlers = [];
+    }
+    this._eventHandlers.push({ type, selector, callback });
+
+    if (!this._listenedEventTypes) {
+      this._listenedEventTypes = new Set();
+    }
+    
+    // Automatically add the event listener to the host if not already listening
+    if (!this._listenedEventTypes.has(type)) {
+      this._listenedEventTypes.add(type);
+      this.addEventListener(type, this);
+    }
+  }
+
+  /**
+   * Centralized event handler that routes events to registered helper callbacks.
+   */
+  handleEvent (e) {
+    if (!this._eventHandlers) return;
+    
+    const target = e.composedPath()[0];
+
+    for (const handler of this._eventHandlers) {
+      if (e.type === handler.type && target.closest(handler.selector)) {
+        handler.callback.call(this, e, target);
+      }
+    }
   }
 }

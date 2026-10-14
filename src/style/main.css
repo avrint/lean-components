@@ -7,6 +7,7 @@
   color-scheme: light dark;
 }
 
+
 @theme {
   /* Base Light Mode Colors & Adaptive Black/White */
   --color-white: #ffffff;
@@ -414,12 +415,13 @@
   --color-taupe-800: #3f3937;
   --color-taupe-900: #342f2d;
   --color-taupe-950: #211e1c;
+
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-white: #000000;
-    --color-black: #ffffff;
+    :root, :host {
+      --color-white: #000000;
+      --color-black: #ffffff;
 
     --color-accent-50: #082f49;
     --color-accent-100: #0c4a6e;
@@ -769,4 +771,5 @@
     --color-taupe-900: #f6f2f0;
     --color-taupe-950: #fbf9f8;
   }
+
 }

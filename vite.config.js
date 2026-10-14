@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import { readdirSync } from 'node:fs';
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite';
 
 // Automatically discover all .html files inside src/
 function getHtmlInputs(srcDir) {
@@ -27,7 +27,20 @@ export default defineConfig({
     outDir: '../dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: getHtmlInputs(srcDir),
+      input: {
+        ...getHtmlInputs(srcDir),
+        // Dedicated entry point for your component library bundle/CSS
+        components: resolve(import.meta.dirname, 'src/components/index.js'),
+      },
+      output: {
+        // Ensure clean naming and structure for generated CSS and assets
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/css/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
+      },
     },
   },
   plugins: [
