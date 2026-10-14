@@ -12,7 +12,6 @@ class TaskList extends BaseComponent {
     const title = this.getAttribute('title') || "Tasks List";
     const buttonText = this.getAttribute('button-text') || "Add Tasks";
 
-    // Using this.html`` powered by our embedded lit-html engine
     return this.html`
       <div class="p-4 bg-accent-50 border border-accent-200 rounded shadow-sm w-64">
         <h2 class="t-title font-bold text-lg border-b border-accent-200 mb-2">${title}</h2>
