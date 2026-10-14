@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import './TestComponent2.js';
 
 export default {
@@ -18,7 +18,7 @@ export const Default = {
   },
   render: (args) => {
     return html`
-    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText} .title=${args.title}></task-list>
+    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>
     `;
   },
 };
@@ -32,7 +32,7 @@ export const Static = {
   },
   render: (args) => {
     return html`
-    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText} .title=${args.title}></task-list>
+    <task-list id="staticList" ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>
     `;
   },
 };
