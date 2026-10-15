@@ -15,13 +15,12 @@ addons.setConfig({
   theme: avrintTheme,
   layoutCustomisations: {
     showPanel(state, defaultValue) {
+      const tags = state.index?.[state.storyId]?.tags ?? [];
       // console.info(isFullPage(state, defaultValue), state, defaultValue)
-      return isFullPage(state, defaultValue) && true
+      return !tags.includes('hide-addons') && !tags.includes('kitchensink')
     },
-    // showPanel(state: State, defaultValue: boolean) {
-    //   return isFullPage(state, defaultValue);
-    // },
     showToolbar(state, defaultValue) {
+      const tags = state.index?.[state.storyId]?.tags ?? [];
       return isFullPage(state, defaultValue) && true
     },
   },
