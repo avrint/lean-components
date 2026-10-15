@@ -2,7 +2,7 @@ import { BaseComponent } from "./AvrintComponent";
 
 class TaskList extends BaseComponent {
   static get observedAttributes () {
-    return ['title', 'button-text'];
+    return ['list-title', 'button-text'];
   }
 
   static get observedEvents () {
@@ -20,7 +20,7 @@ class TaskList extends BaseComponent {
   }
 
   render () {
-    const title = this.getAttribute('title') || "Tasks List";
+    const title = this.getAttribute('list-title') || "Tasks List";
     const buttonText = this.getAttribute('button-text') || "Add Tasks";
 
     return this.html`

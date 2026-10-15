@@ -4,19 +4,19 @@ import './TestComponent2.js';
 export default {
   title: 'WebComponents/TestComponent2',
   argTypes: {
-    title: { control: 'text' },
+    listTitle: { control: 'text' },
     buttonText: { control: 'text' },
   },
   tags: ["test"]
 };
 
 const render = (args) =>{
-    return html`<task-list ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} .title=${args.title ? args.title : nothing}></task-list>`;
+    return html`<task-list ?static=${args.static} button-text=${args.buttonText ? args.buttonText : nothing} list-title=${args.listTitle ? args.listTitle : nothing}></task-list>`;
   }
 
 export const Default = {
   args: {
-    title: "",
+    listTitle: "",
     buttonText: "",
   },
   render: (args) => {
@@ -26,7 +26,7 @@ export const Default = {
 
 export const Static = {
   args: {
-    title: "Static Elem",
+    listTitle: "Static Elem",
     buttonText: "AddTask",
   },
   render: (args) => {

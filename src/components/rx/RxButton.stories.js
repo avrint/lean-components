@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import './RxButton.js';
  
 export default {
@@ -22,7 +22,7 @@ export default {
 const buttonTemplate = (args) => html`
   <rx-button 
     ?disabled=${args.disabled} 
-    type=${args.type}
+    type=${args.type ? args.type : nothing}
     @click=${args.onClick}
   >
     ${args.text}
@@ -32,7 +32,7 @@ const buttonTemplate = (args) => html`
 export const Default = {
   args: {
     disabled: false,
-    type: 'button',
+    type: null,
     text: 'Button',
   },
   render: buttonTemplate,
@@ -41,7 +41,7 @@ export const Default = {
 export const Disabled = {
   args: {
     disabled: true,
-    type: 'button',
+    type: null,
     text: 'Disabled',
   },
   render: buttonTemplate,
