@@ -35,6 +35,7 @@ export class BaseComponent extends HTMLElement {
 
   attributeChangedCallback (_name, oldVal, newVal) {
     if (oldVal === newVal) return;
+    console.info("attributeChangedCallback", _name, oldVal, newVal);
     this._render();
   }
 
@@ -47,6 +48,9 @@ export class BaseComponent extends HTMLElement {
     if (typeof tailwindStyles !== 'undefined') {
       this.shadowRoot.adoptedStyleSheets = [tailwindStyles];
     }
+
+    // Flag to prevent recursive rendering loops from mutation observers
+    this._isRendering = false;
   }
 
   _listen (type) {
@@ -54,30 +58,50 @@ export class BaseComponent extends HTMLElement {
   }
 
   _render () {
+    if (this._isRendering) return;
     if (typeof this.render === 'function') {
-      render(this.render(), this.shadowRoot);
+      try {
+        this._isRendering = true;
+        render(this.render(), this.shadowRoot);
+      } finally {
+        this._isRendering = false;
+      }
     }
   }
 
   connectedCallback () {
     this.constructor.observedEvents.forEach((event) => {
-      this._listen(event);
+      this.addEventListener(event, this);
     });
+
+    // Scoped strictly to childList changes for light DOM content projection
+    this._observer = new MutationObserver((mutations) => {
+      if (this._isRendering) return;
+      const shouldRender = mutations.some(mutation => {
+        if (mutation.type === 'childList') return true;
+        if (mutation.target !== this && mutation.attributeName !== 'slot' && mutation.type === 'attributes') return true;
+        return false;
+      });
+      if (shouldRender) {
+        this._render();
+      }
+    });
+
+    this._observer.observe(this, { childList: true, subtree: true, attributes: true });
 
     this._render();
   }
 
   disconnectedCallback () {
-    // No more MutationObserver needed! Clean teardown.
+    this._observer?.disconnect();
   }
 
   /**
-   * Native slot change handler to support progressive enhancement updates.
-   * Use `@slotchange="${this.handleSlotChange}"` on your slots.
+   * Native slot change handler bound via arrow function to preserve component context.
    */
-  handleSlotChange () {
+  handleSlotChange = () => {
     this._render();
-  }
+  };
 
   /**
    * Registers a delegated event handler for the component.
@@ -87,20 +111,20 @@ export class BaseComponent extends HTMLElement {
    * @param {string} selector The CSS selector to match against
    * @param {Function} callback The handler function: (e, target) => {}
    */
-  event (type, selector, callback) {
+  event (type, selector, callback, t) {
     if (!this._eventHandlers) {
       this._eventHandlers = [];
     }
-    this._eventHandlers.push({ type, selector, callback });
+    this._eventHandlers.push({ type, selector, callback, t});
 
     if (!this._listenedEventTypes) {
       this._listenedEventTypes = new Set();
     }
-    
+
     // Automatically add the event listener to the host if not already listening
     if (!this._listenedEventTypes.has(type)) {
       this._listenedEventTypes.add(type);
-      this.addEventListener(type, this);
+      this.addEventListener(type, this, t);
     }
   }
 
@@ -109,12 +133,20 @@ export class BaseComponent extends HTMLElement {
    */
   handleEvent (e) {
     if (!this._eventHandlers) return;
-    
-    const target = e.composedPath()[0];
+
+    const path = e.composedPath();
 
     for (const handler of this._eventHandlers) {
-      if (e.type === handler.type && target.closest(handler.selector)) {
-        handler.callback.call(this, e, target);
+      if (e.type !== handler.type) continue;
+
+      // Find the exact element in the event path that matches the selector
+      const matchedElement = path.find(node =>
+        node.nodeType === Node.ELEMENT_NODE && node.matches && node.matches(handler.selector)
+      );
+
+      if (matchedElement) {
+        handler.callback.call(this, e, matchedElement);
+        break;
       }
     }
   }
