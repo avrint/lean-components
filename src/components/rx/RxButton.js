@@ -5,9 +5,8 @@ export class RxButton extends BaseComponent {
     return ['disabled'];
   }
   
-  connectedCallback() {
-    super.connectedCallback();
-
+  constructor() {
+    super();
     this.openIndices = new Set();
 
     this.event('click', 'rx-button', (e, target) => {

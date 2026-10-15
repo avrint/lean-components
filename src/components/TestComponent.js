@@ -1,6 +1,7 @@
 import { BaseComponent } from './AvrintComponent.js';
 
 export class TestComponent extends BaseComponent {
+  static get observedAttributes () { return ['title']; }
 
   render () {
     const title = this.getAttribute('title') || 'Default Title';
