@@ -10,7 +10,6 @@ export class RxButton extends BaseComponent {
     this.openIndices = new Set();
 
     this.event('click', 'rx-button', (e, target) => {
-      console.info(target)
       if (this.hasAttribute('disabled')) {
         e.preventDefault();
         e.stopImmediatePropagation();
