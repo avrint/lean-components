@@ -17,9 +17,42 @@ import tailwindCssString from '../style/components.css?inline';
 const tailwindStyles = new CSSStyleSheet();
 tailwindStyles.replaceSync(tailwindCssString);
 
+
+// 1. Import your generated icon JSON and font CSS
+import iconMap from '../assets/fonts/app-icons.json';
+
+// 2. Define your pure JS Enum interface
+export const AppIcons = Object.freeze(
+  Object.keys(iconMap).reduce((acc, key) => {
+    const enumKey = key.charAt(0).toLowerCase() + key.slice(1);
+    acc[enumKey] = key;
+    return acc;
+  }, {})
+);
+
 export class BaseComponent extends HTMLElement {
 
   html = html;
+
+  // Make AppIcons accessible on the class/instance if needed
+  static AppIcons = AppIcons;
+  AppIcons = AppIcons;
+
+  /**
+   * Helper method available to all child components to render an icon.
+   * @param {string} iconName - Use AppIcons.Home, etc.
+   * @param {string} [className=''] - Extra utility classes (e.g. text-lg text-red-500)
+   */
+  icon(iconName, className = '') {
+    const codePoint = iconMap[iconName];
+    console.info(codePoint);
+    if (!codePoint) return html``;
+    
+    const char = String.fromCodePoint(codePoint);
+    
+    // Automatically uses the .app-icon class defined in the adopted stylesheet
+    return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;
+  }
 
   static get attributeSelectors () {
     return {};
@@ -150,4 +183,23 @@ export class BaseComponent extends HTMLElement {
       }
     }
   }
+}
+
+/** ICON COMPONENT */
+
+export class AvIcon extends BaseComponent {
+  static get observedAttributes () { return ['name', 'class']; }
+
+  render () {
+    const name = this.getAttribute('name') || 'Default Title';
+    const className = this.getAttribute('class') || 'text-xl';
+
+    return this.html`
+       ${this.icon(AppIcons[name], className)}
+    `;
+  }
+}
+
+if (!customElements.get('av-icon')) {
+  customElements.define('av-icon', AvIcon);
 }

@@ -1,0 +1,7 @@
+{
+  "inputDir": "./src/icons",     
+  "outputDir": "./src/assets/fonts",
+  "fontTypes": ["woff2", "woff"],
+  "assetTypes": ["json", "css"],
+  "name": "app-icons"
+}

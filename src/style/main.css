@@ -1,5 +1,6 @@
 /* tailwind-theme.css */
 @import "tailwindcss";
+@import "../assets/fonts/app-icons.css";
 
 /* @custom-variant dark (&:where(.dark, .dark *)); */
 
@@ -9,6 +10,7 @@
 
 
 @theme {
+  --font-icon: "app-icons", sans-serif;
   /* Base Light Mode Colors & Adaptive Black/White */
   --color-white: #ffffff;
   --color-black: #000000;
