@@ -10,18 +10,16 @@
 });
 // --- PASTED LIT-HTML BUNDLE END ---
 
-const { html, render } = lit_html;
+export const { html, render, nothing } = lit_html;
 
-// Optional: Import your compiled Tailwind CSS string using Vite's ?inline query
+// --- TailwindCSS INTEGRATION ---
 import tailwindCssString from '../style/components.css?inline';
 const tailwindStyles = new CSSStyleSheet();
 tailwindStyles.replaceSync(tailwindCssString);
 
-
-// 1. Import your generated icon JSON and font CSS
+// --- icon-font INTEGRATION ---
 import iconMap from '../assets/fonts/app-icons.json';
 
-// 2. Define your pure JS Enum interface
 export const AppIcons = Object.freeze(
   Object.keys(iconMap).reduce((acc, key) => {
     const enumKey = key.charAt(0).toLowerCase() + key.slice(1);
@@ -43,15 +41,40 @@ export class BaseComponent extends HTMLElement {
    * @param {string} iconName - Use AppIcons.Home, etc.
    * @param {string} [className=''] - Extra utility classes (e.g. text-lg text-red-500)
    */
-  icon(iconName, className = '') {
+  icon (iconName, className = '') {
     const codePoint = iconMap[iconName];
     if (!codePoint) return html``;
-    
+
     // const char = String.fromCodePoint(codePoint);
-    
+
     // Automatically uses the .app-icon class defined in the adopted stylesheet
     return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;
   }
+
+  /**
+   * Registers the custom element. 
+   * Defers definition until DOM is loaded if necessary, firing only once.
+   * @param {string} [elemName] Optional custom element tag name
+   */
+  static register (elemName) {
+    const name = elemName || this.elementName;
+    if (!name) return this;
+
+    const defineElement = () => {
+      if (!customElements.get(name)) {
+        customElements.define(name, this);
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', defineElement, { once: true });
+    } else {
+      defineElement();
+    }
+
+    return this;
+  }
+
 
   static get attributeSelectors () {
     return {};
@@ -147,7 +170,7 @@ export class BaseComponent extends HTMLElement {
     if (!this._eventHandlers) {
       this._eventHandlers = [];
     }
-    this._eventHandlers.push({ type, selector, callback, t});
+    this._eventHandlers.push({ type, selector, callback, t });
 
     if (!this._listenedEventTypes) {
       this._listenedEventTypes = new Set();
@@ -190,15 +213,11 @@ export class AvIcon extends BaseComponent {
   static get observedAttributes () { return ['name', 'class']; }
 
   render () {
-    const name = this.getAttribute('name') || 'Default Title';
+    const iconName = this.getAttribute('name') || 'rx-value-none';
     const className = this.getAttribute('class') || 'text-xl';
 
-    return this.html`
-       ${this.icon(AppIcons[name], className)}
-    `;
+    return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;
   }
 }
 
-if (!customElements.get('av-icon')) {
-  customElements.define('av-icon', AvIcon);
-}
+AvIcon.register('lean-icon');

@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html, nothing } from '../AvrintComponent.js';
 import './RxButton.js';
  
 export default {

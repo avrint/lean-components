@@ -13,6 +13,9 @@ function isFullPage(state: State, defaultValue: boolean) {
 
 addons.setConfig({
   theme: avrintTheme,
+  sidebar: {
+    showRoots: false,
+  },
   layoutCustomisations: {
     showPanel(state, defaultValue) {
       const tags = state.index?.[state.storyId]?.tags ?? [];

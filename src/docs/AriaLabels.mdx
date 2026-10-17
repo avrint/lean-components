@@ -1,10 +1,16 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Design System/Aria State & Property Cheat Sheet" tags={['kitchensink']} />
+<Meta title="Design System/ARIA State & Properties" tags={['kitchensink']} />
 
 # ARIA State & Property Cheat Sheet
 
 This design system reference maps WAI-ARIA functional states and properties to their corresponding JavaScript DOM IDL properties (`elem.aria*`) for use across your web components and styling layers.
+
+
+## Architecture & Styling Rules
+
+* Explicit String Values: Setting state properties via JavaScript requires explicit string values rather than raw booleans. `elem.ariaExpanded = "true"`
+* Tailwind CSS Integration: Hook directly into these standardized states using Tailwind's built-in modifiers instead of redundant custom selectors. `aria-expanded:block`
 
 ## State & Property Mapping Reference
 
@@ -91,10 +97,3 @@ This design system reference maps WAI-ARIA functional states and properties to t
       </tbody>
    </table>
 </div>
-
----
-
-## Architecture & Styling Rules
-
-* Explicit String Values: Setting state properties via JavaScript requires explicit string values rather than raw booleans. Example: Right: `elem.ariaExpanded = "true"` Wrong: `elem.ariaExpanded = true`
-* Tailwind CSS Integration: Hook directly into these standardized states using Tailwind's built-in modifiers instead of redundant custom selectors. Example: Right: `aria-expanded:block` Wrong: `data-[expanded]:block`

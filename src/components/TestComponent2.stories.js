@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html, nothing } from './AvrintComponent.js';
 import './TestComponent2.js';
 
 export default {

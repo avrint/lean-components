@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html } from '../AvrintComponent';
 import './HoverTooltipButtons';
 
 export default {
@@ -30,7 +30,7 @@ export const Default = {
         <av-icon-button icon="home"></av-icon-button>
         </div>
         <div className="grid gap-1.5 sm:gap-4 grid-flow-col auto-cols-fr">
-          <av-icon-button icon="message" tooltip="Messages"></av-icon-button>
+          <av-icon-button tooltip="Messages"></av-icon-button>
         </div>
         <div className="grid gap-1.5 sm:gap-4 grid-flow-col auto-cols-fr">
 

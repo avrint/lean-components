@@ -45,9 +45,9 @@ export class AvIconButton extends BaseComponent {
     return this.html`
     <div class="group relative px-3 cursor-pointer">
       <div
-        class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-accent-50 active:bg-accent-100 hover:text-accent-600 transition-colors "
+        class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-accent-50 active:bg-accent-100 hover:text-accent-500 transition-colors duration-400 hover:duration-75"
       >
-      <av-icon name="${iconName}"/>
+      <lean-icon class="align-middle p-1" name="${iconName}"/>
         
       </div>
       ${tooltip ? this.html`<span

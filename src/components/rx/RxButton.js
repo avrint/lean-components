@@ -41,6 +41,4 @@ export class RxButton extends BaseComponent {
   }
 }
 
-if (!customElements.get('rx-button')) {
-  customElements.define('rx-button', RxButton);
-}
+RxButton.register('rx-button');
