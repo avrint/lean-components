@@ -45,10 +45,9 @@ export class BaseComponent extends HTMLElement {
    */
   icon(iconName, className = '') {
     const codePoint = iconMap[iconName];
-    console.info(codePoint);
     if (!codePoint) return html``;
     
-    const char = String.fromCodePoint(codePoint);
+    // const char = String.fromCodePoint(codePoint);
     
     // Automatically uses the .app-icon class defined in the adopted stylesheet
     return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;
@@ -68,7 +67,7 @@ export class BaseComponent extends HTMLElement {
 
   attributeChangedCallback (_name, oldVal, newVal) {
     if (oldVal === newVal) return;
-    console.info("attributeChangedCallback", _name, oldVal, newVal);
+    // console.info("attributeChangedCallback", _name, oldVal, newVal);
     this._render();
   }
 
