@@ -10,7 +10,7 @@ export default {
 
 export const Single = {
   args: {
-    icon: "settings",
+    icon: "hi2-rocket-launch",
   },
   render: (args) => html`
     <lean-icon name="${args.icon}" ></lean-icon>
