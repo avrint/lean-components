@@ -55,11 +55,11 @@ export class RxAccordion extends BaseComponent {
                 <button data-accordion-btn data-index="${index}" aria-expanded="${isOpen}"
                   class="group w-full flex h-[45px] flex-1 cursor-pointer items-center justify-between bg-gray-50 px-5 text-[15px] leading-none text-accent-700 shadow-[0_1px_0] shadow-gray-300 outline-none hover:bg-gray-100">
                   <span class="summary-text font-medium">${title}</span>
-                  <span class="text-accent-600 transition-transform duration-200 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]/item:-rotate-z-180">
+                  <span class="text-accent-600 transition-transform duration-150 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]/item:-rotate-z-180">
                   <lean-icon name="rx-caret-down"></lean-icon>
                   </span>
                 </button>
-              <div class="grid grid-rows-[0fr] transition-all duration-200 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]/item:grid-rows-[1fr]">
+              <div class="grid grid-rows-[0fr] transition-all duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]/item:grid-rows-[1fr]">
                 <div class="overflow-hidden">
                   <div class="px-5 py-[15px] bg-gray-50 text-gray-700">
                     <slot name="section-${index}"></slot>
