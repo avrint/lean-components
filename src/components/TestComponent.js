@@ -15,6 +15,4 @@ export class TestComponent extends BaseComponent {
   }
 }
 
-if (!customElements.get('test-component')) {
-  customElements.define('test-component', TestComponent);
-}
+TestComponent.register('test-component');

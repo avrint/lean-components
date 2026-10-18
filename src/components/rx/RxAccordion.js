@@ -74,6 +74,4 @@ export class RxAccordion extends BaseComponent {
   }
 }
 
-if (!customElements.get('rx-accordion')) {
-  customElements.define("rx-accordion", RxAccordion);
-}
+RxAccordion.register('rx-accordion');

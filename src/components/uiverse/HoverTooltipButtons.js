@@ -13,9 +13,7 @@ export class AvCard extends BaseComponent {
   }
 }
 
-if (!customElements.get('av-card')) {
-  customElements.define('av-card', AvCard);
-}
+AvCard.register('av-card');
 
 export class AvGradientText extends BaseComponent {
   static get observedAttributes () { return ['className']; }
@@ -31,9 +29,7 @@ export class AvGradientText extends BaseComponent {
   }
 }
 
-if (!customElements.get('av-gradient-text')) {
-  customElements.define('av-gradient-text', AvGradientText);
-}
+AvGradientText.register('av-gradient-text');
 
 export class AvIconButton extends BaseComponent {
   static get observedAttributes () { return ['icon', 'tooltip']; }
@@ -61,10 +57,7 @@ export class AvIconButton extends BaseComponent {
   }
 }
 
-if (!customElements.get('av-icon-button')) {
-  customElements.define('av-icon-button', AvIconButton);
-}
-
+AvIconButton.register('av-icon-button');
 
 
 export class HoverTooltipButtons extends BaseComponent {
@@ -95,6 +88,4 @@ export class HoverTooltipButtons extends BaseComponent {
   }
 }
 
-if (!customElements.get('hover-menu')) {
-  customElements.define('hover-menu', HoverTooltipButtons);
-}
+HoverTooltipButtons.register('hover-menu');

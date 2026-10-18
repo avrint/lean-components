@@ -39,4 +39,4 @@ class TaskList extends BaseComponent {
   }
 }
 
-customElements.define('task-list', TaskList);
+TaskList.register('task-list');
