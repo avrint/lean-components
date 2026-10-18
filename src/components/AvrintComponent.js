@@ -213,7 +213,7 @@ export class AvIcon extends BaseComponent {
   static get observedAttributes () { return ['name', 'class']; }
 
   render () {
-    const iconName = this.getAttribute('name') || 'rx-value-none';
+    const iconName = this.getAttribute('name') || 'blank';
     const className = this.getAttribute('class') || 'text-xl';
 
     return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;

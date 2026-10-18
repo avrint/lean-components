@@ -4,7 +4,7 @@ export class AvIconButton extends BaseComponent {
   static get observedAttributes () { return ['icon', 'tooltip', "className"]; }
 
   render () {
-    const iconName = this.getAttribute('icon') || 'home';
+    const iconName = this.getAttribute('icon') || 'blank';
     const tooltip = this.getAttribute('tooltip') || null;
     const className = this.getAttribute('className') || "";
 

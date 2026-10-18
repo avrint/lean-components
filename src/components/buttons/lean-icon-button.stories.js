@@ -15,7 +15,7 @@ export const Default = {
   },
   render: (args) => html`
   <div className="grid gap-1 sm:gap-2 grid-flow-col auto-cols-fr">
-    <lean-icon-button className="!text-3xl !p-4" icon="settings" tooltip=${args.tooltip}></lean-icon-button>
+    <lean-icon-button className="!text-3xl !p-4" icon="rx-gear" tooltip=${args.tooltip}></lean-icon-button>
     </div>
   `,
 };
