@@ -16,7 +16,7 @@ export class AvIconButton extends BaseComponent {
       <lean-icon class="align-middle p-0 text-[1em] ${className}" name="${iconName}"/>
         
       </div>
-      ${true ? this.html`<span
+      ${tooltip ? this.html`<span
         class="absolute -top-12 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-200 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white whitespace-nowrap"
       >
         ${tooltip}

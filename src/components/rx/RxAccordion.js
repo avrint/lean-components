@@ -1,12 +1,14 @@
 import { BaseComponent } from '../AvrintComponent.js';
 
 export class RxAccordion extends BaseComponent {
-  static get observedAttributes () { return ['single']; }
+  static get observedAttributes () { return ['single', 'expanded']; }
   static get observedEvents () { return ['click']; }
 
   constructor() {
     super();
     this.openIndices = new Set();
+    this._initialized = false;
+
     this.event('click', '[data-accordion-btn]', (e, target) => {
       const index = parseInt(target.getAttribute('data-index'), 10);
       const isSingle = this.hasAttribute('single');
@@ -26,7 +28,14 @@ export class RxAccordion extends BaseComponent {
     const sections = Array.from(this.querySelectorAll('section'));
     const isSingle = this.hasAttribute('single');
 
-    if (isSingle && this.openIndices.size > 1) {
+    !this._initialized && sections.forEach((section, index) => {
+      if (section.hasAttribute('expanded')) {
+        this.openIndices.has(index) ?  this.openIndices[index] = index : this.openIndices.add(index);
+        this._initialized = true;
+      }
+    });
+
+    if (isSingle && this.openIndices.size > 2) {
       const firstOpen = Array.from(this.openIndices)[0];
       this.openIndices = new Set([firstOpen]);
     }

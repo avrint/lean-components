@@ -14,7 +14,7 @@
   },
   "type": "module",
   "scripts": {
-    "fix-svgs": "npx unstroke src/icons -o src/icons --optimize",
+    "fix-svgs": "npx unstroke src/icons-pre -o src/icons --optimize",
     "generate:icons": "bun run fix-svgs && fantasticon --normalize",
     "build": "vite build",
     "dev": "vite --port 4242",
