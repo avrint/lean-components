@@ -77,10 +77,14 @@ export class HoverTooltipButtons extends BaseComponent {
           <av-gradient-text>
             <av-icon-button icon="home"></av-icon-button>
           </av-gradient-text>
-          <av-icon-button icon="message" tooltip="Messages"></av-icon-button>
+          <av-icon-button icon="hi2-bars-3" tooltip="Messages"></av-icon-button>
           <av-icon-button icon="message" tooltip="Messages 2"></av-icon-button>
-          <av-icon-button icon="message" tooltip="Messages 3 3"></av-icon-button>
-          <av-icon-button class="text-accent3-700" icon="friends" tooltip="User"></av-icon-button>
+          <av-icon-button icon="rx-heart" tooltip="Messages 3 3"></av-icon-button>
+          <av-icon-button icon="lu-cassette-tape" tooltip="Messages 3 3"></av-icon-button>
+          <av-icon-button icon="rx-gear" tooltip="Messages 3 3"></av-icon-button>
+          <av-icon-button icon="rx-arrow-up" tooltip="Messages 3 3"></av-icon-button>
+          <av-icon-button icon="rx-arrow-down" tooltip="Messages 3 3"></av-icon-button>
+          <av-icon-button class="text-accent3-700" icon="lu-battery-plus" tooltip="User"></av-icon-button>
           <av-icon-button class="text-accent2-700" icon="settings" tooltip="Settings"></av-icon-button>
         </div>
       </av-card>

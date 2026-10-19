@@ -19,7 +19,7 @@
     "build": "vite build",
     "dev": "vite --port 4242",
     "preview": "vite preview --port 4242",
-    "storybook:dev": "bun run generate:icons && storybook dev -p 6969 --no-open --no-version-updates "
+    "storybook:dev": "storybook dev -p 6969 --no-open --no-version-updates "
   },
   "dependencies": {
     "@storybook/addon-docs": "^10.6.2",
@@ -27,6 +27,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "culori": "^4.0.2",
     "fantasticon": "^4.1.0",
+    "fs-extra": "^11.4.1",
+    "glob": "^13.0.6",
     "storybook": "10.6.2",
     "tailwindcss": "^4.3.3"
   },

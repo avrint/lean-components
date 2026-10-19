@@ -1,6 +1,7 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
 import { mergeConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
+import leanIconsPlugin from '../plugins/vite-plugin-lean-icons.js';
 
 const config: StorybookConfig = {
   staticDirs: ['../public'],
@@ -25,7 +26,8 @@ const config: StorybookConfig = {
         ],
       },
       plugins: [
-        tailwindcss()
+        tailwindcss(),
+        leanIconsPlugin()
       ],
       // 🚀 This tells Vite to ignore Storybook's internal subpaths during pre-bundling
       optimizeDeps: {

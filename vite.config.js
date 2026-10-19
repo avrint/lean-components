@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import { readdirSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
+import leanIconsPlugin from './plugins/vite-plugin-lean-icons.js';
 
 // Automatically discover all .html files inside src/
 function getHtmlInputs(srcDir) {
@@ -24,9 +25,13 @@ const srcDir = resolve(import.meta.dirname, 'src');
 export default defineConfig({
   root: 'src',
   build: {
+    
     outDir: '../dist',
     emptyOutDir: true,
     rollupOptions: {
+      checks:{
+        bundlerTimings: false
+      },
       input: {
         ...getHtmlInputs(srcDir),
         // Dedicated entry point for your component library bundle/CSS
@@ -45,5 +50,6 @@ export default defineConfig({
   },
   plugins: [
     tailwindcss(),
+    leanIconsPlugin(),
   ],
 });
