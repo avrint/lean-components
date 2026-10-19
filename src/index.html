@@ -22,8 +22,20 @@
   <div id="app">
     <h1>Vite + Web Components</h1>
     <hover-menu></hover-menu>
+    <html-include src="sections/product-grid.html" title="Featured Products">
+      <script type="application/json">
+        {
+        "items": [
+        { "name": "Classic T-Shirt", "price": "$29", "showBadge": true },
+        { "name": "Slim Jeans", "price": "$79" },
+        { "name": "Slim Jeans", "price": "$79" }
+        ]
+        }
+      </script>
+    </html-include>
   </div>
   <script type="module" src="./components/uiverse/HoverTooltipButtons.js"></script>
+  <script type="module" src="./components/rx/RxButton.js"></script>
 </body>
 
 </html>

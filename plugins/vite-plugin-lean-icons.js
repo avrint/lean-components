@@ -36,7 +36,7 @@ async function generateFullFont(outputDir) {
     codepoints
   });
   
-  console.log('✨ [lean-icons] Full icon font generated successfully.');
+  // console.log('✨ [lean-icons] Full icon font generated successfully.');
 }
 
 async function optimizeFontFromDist(distDir, finalOutputDir) {
@@ -161,7 +161,7 @@ export default function leanIconsPlugin() {
     async closeBundle() {
       if (viteCommand === 'build' && !hasRun) {
         hasRun = true;
-        console.info('⚡ [lean-icons] Post-build optimization starting...');
+        // console.info('⚡ [lean-icons] Post-build optimization starting...');
         const distDir = path.resolve('dist');
         const finalOutputDir = path.resolve('dist/assets/fonts');
         await optimizeFontFromDist(distDir, finalOutputDir);

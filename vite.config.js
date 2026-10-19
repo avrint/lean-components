@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { readdirSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
 import leanIconsPlugin from './plugins/vite-plugin-lean-icons.js';
+import htmlIncludePlugin from './plugins/vite-plugin-html-include.js';
 
 // Automatically discover all .html files inside src/
 function getHtmlInputs(srcDir) {
@@ -51,5 +52,8 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     leanIconsPlugin(),
+    htmlIncludePlugin({
+      fragmentsDir: './src' // Root folder where your sections/pages live
+    })
   ],
 });
