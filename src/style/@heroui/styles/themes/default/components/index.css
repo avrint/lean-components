@@ -1,0 +1,94 @@
+/* Default theme component customizations */
+/* 
+ * This file can contain theme-specific overrides for component styles.
+ * Since the default theme uses the base styles as-is, this file is empty.
+ * Custom themes can override specific component styles here.
+ */
+:root {
+  color-scheme: light dark;
+}
+
+@theme inline {
+
+  --accent: oklch(63.14% 0.2208 34.85);
+  --accent-foreground: oklch(99.11% 0 0);
+  --background: oklch(97.02% 0.0040 34.85);
+  --border: oklch(90.00% 0.0040 34.85);
+  --danger: oklch(52.991% 0.20755 28.232);
+  --danger-foreground: oklch(99.11% 0 0);
+  --default: oklch(94.00% 0.0040 34.85);
+  --default-foreground: oklch(21.03% 0.0059 34.85);
+  --field-background: oklch(100.00% 0.0020 34.85);
+  --field-border: transparent;
+  --field-foreground: oklch(21.03% 0.0040 34.85);
+  --field-placeholder: oklch(55.17% 0.0080 34.85);
+  --focus: oklch(63.14% 0.2208 34.85);
+  --foreground: oklch(21.03% 0.0040 34.85);
+  --muted: oklch(55.17% 0.0080 34.85);
+  --overlay: oklch(100.00% 0.0012 34.85);
+  --overlay-foreground: oklch(21.03% 0.0040 34.85);
+  --scrollbar: oklch(87.10% 0.0040 34.85);
+  --segment: oklch(100.00% 0.0040 34.85);
+  --segment-foreground: oklch(21.03% 0.0040 34.85);
+  --separator: oklch(92.00% 0.0040 34.85);
+  --success: oklch(84.854% 0.20239 156.722);
+  --success-foreground: oklch(21.03% 0.0059 124.53);
+  --surface: oklch(100.00% 0.0020 34.85);
+  --surface-foreground: oklch(21.03% 0.0040 34.85);
+  --surface-secondary: oklch(95.24% 0.0032 34.85);
+  --surface-secondary-foreground: oklch(21.03% 0.0040 34.85);
+  --surface-tertiary: oklch(93.73% 0.0032 34.85);
+  --surface-tertiary-foreground: oklch(21.03% 0.0040 34.85);
+  --warning: oklch(83.784% 0.16918 89.683);
+  --warning-foreground: oklch(21.03% 0.0059 46.05);
+
+  /* Border Radius */
+  --radius: 0.15rem;
+  --field-radius: 0.55rem;
+
+  /* Font Family */
+  /* Make sure to load Inter font in your app */
+  --font-sans: var(--font-inter);
+}
+
+@media (prefers-color-scheme: dark) {
+
+  /* Dark Mode semantic props override */
+  :root,
+  :host {
+    /* Theme Colors (Dark Mode) */
+    --accent: oklch(63.14% 0.2208 34.85);
+    --accent-foreground: oklch(99.11% 0 0);
+    --background: oklch(12.00% 0.0040 34.85);
+    --border: oklch(28.00% 0.0040 34.85);
+    --danger: oklch(57.005% 0.22493 22.8);
+    --danger-foreground: oklch(99.11% 0 0);
+    --default: oklch(27.40% 0.0040 34.85);
+    --default-foreground: oklch(99.11% 0 0);
+    --field-background: oklch(21.03% 0.0080 34.85);
+    --field-border: transparent;
+    --field-foreground: oklch(99.11% 0.0040 34.85);
+    --field-placeholder: oklch(70.50% 0.0080 34.85);
+    --focus: oklch(63.14% 0.2208 34.85);
+    --foreground: oklch(99.11% 0.0040 34.85);
+    --muted: oklch(70.50% 0.0080 34.85);
+    --overlay: oklch(21.03% 0.0080 34.85);
+    --overlay-foreground: oklch(99.11% 0.0040 34.85);
+    --scrollbar: oklch(70.50% 0.0040 34.85);
+    --segment: oklch(39.64% 0.0040 34.85);
+    --segment-foreground: oklch(99.11% 0.0040 34.85);
+    --separator: oklch(25.00% 0.0040 34.85);
+    --success: oklch(64.285% 0.14698 158.321);
+    --success-foreground: oklch(21.03% 0.0059 124.53);
+    --surface: oklch(21.03% 0.0080 34.85);
+    --surface-foreground: oklch(99.11% 0.0040 34.85);
+    --surface-secondary: oklch(25.70% 0.0060 34.85);
+    --surface-secondary-foreground: oklch(99.11% 0.0040 34.85);
+    --surface-tertiary: oklch(27.21% 0.0060 34.85);
+    --surface-tertiary-foreground: oklch(99.11% 0.0040 34.85);
+    --warning: oklch(73.787% 0.14802 84.67);
+    --warning-foreground: oklch(21.03% 0.0059 50.06);
+
+
+  }
+}

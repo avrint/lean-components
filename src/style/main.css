@@ -1,5 +1,6 @@
 /* tailwind-theme.css */
 @import "tailwindcss";
+@import "./@heroui/styles/index.css";
 @import "../assets/fonts/app-icons.css";
 
 /* @custom-variant dark (&:where(.dark, .dark *)); */
@@ -10,6 +11,9 @@
 
 
 @theme {
+  --primary: var(--color-accent-500);
+  --primary-foreground: var(--color-white);
+
   --font-icon: "app-icons", sans-serif;
   /* Base Light Mode Colors & Adaptive Black/White */
   --color-white: #ffffff;
@@ -421,9 +425,16 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :root, :host {
-      --color-white: #000000;
-      --color-black: #ffffff;
+
+  :root,
+  :host {
+
+    --primary: var(--color-accent-400);
+    --primary-foreground: var(--color-black);
+
+
+    --color-white: #000000;
+    --color-black: #ffffff;
 
     --color-accent-50: #082f49;
     --color-accent-100: #0c4a6e;

@@ -22,16 +22,53 @@
   <div id="app">
     <h1>Vite + Web Components</h1>
     <hover-menu></hover-menu>
-    <html-include src="sections/product-grid.html" title="Featured Products">
-      <script type="application/json">
+    <html-include src="./sections/product-grid.fragment.html" title="Featured Products">
+      <data>
         {
-        "items": [
-        { "name": "Classic T-Shirt", "price": "$29", "showBadge": true },
-        { "name": "Slim Jeans", "price": "$79" },
-        { "name": "Slim Jeans", "price": "$79" }
-        ]
+          "items": [
+            {
+              "name": "Classic T-Shirt",
+              "price": "$420",
+              "showBadge": true
+            },
+            {
+              "name": "Slim Jeans",
+              "price": "$72",
+              "showBadge": true
+            },
+            {
+              "name": "Slim Jeans"
+              
+            },
+            {
+              "name": "Slim Jeans",
+              "price": "$279"
+            },
+            {
+              "name": "Classic T-Shirt",
+              "price": "$29",
+              "showBadge": true
+            },
+            {
+              "name": "Slim Jeans",
+              "price": "$72",
+              "showBadge": true
+            },
+            {
+              "name": "Slim Jeans",
+              "price": "$179"
+            },
+            {
+              "name": "Slim Jeans",
+              "price": "$279",
+              "showBadge": true
+            }
+          ]
         }
-      </script>
+      </data>
+    </html-include>
+    <html-include src="sections/hero.fragment.html" subtitle="Featured Products 333" title="Featured Products">
+      
     </html-include>
   </div>
   <script type="module" src="./components/uiverse/HoverTooltipButtons.js"></script>

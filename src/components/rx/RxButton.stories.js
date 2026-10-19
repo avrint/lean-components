@@ -10,6 +10,14 @@ export default {
       options: ['button', 'submit', 'reset'],
       description: 'The native behavior type of the button'
     },
+    variant: { 
+      control: { type: 'select' },
+      options: ['primary', 'secondary', 'tertiary', 'outline', 'ghost', 'danger', 'danger-soft'],
+    },
+    size: { 
+      control: { type: 'select' },
+      options: ['sm', 'md', 'lg'],
+    },
     text: { 
       control: 'text',
       description: 'Inner text content of the button'
@@ -23,26 +31,69 @@ const buttonTemplate = (args) => html`
   <rx-button 
     ?disabled=${args.disabled} 
     type=${args.type ? args.type : nothing}
+    size=${args.size ? args.size : nothing}
+    variant=${args.variant ? args.variant : nothing}
     @click=${args.onClick}
   >
     ${args.text}
   </rx-button>
 `;
 
-export const Default = {
+export const Primary = {
   args: {
     disabled: false,
     type: null,
-    text: 'Button',
+    text: 'Primary',
   },
   render: buttonTemplate,
 };
 
-export const Disabled = {
+export const Secondary = {
   args: {
-    disabled: true,
+    disabled: false,
     type: null,
-    text: 'Disabled',
+    text: 'Secondary',
+    variant: 'secondary',
+  },
+  render: buttonTemplate,
+};
+
+export const Tertiary = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Tertiary',
+    variant: 'tertiary',
+  },
+  render: buttonTemplate,
+};
+
+export const Danger = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Danger',
+    variant: 'danger',
+  },
+  render: buttonTemplate,
+};
+
+export const DangerSoft = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Danger Soft',
+    variant: 'danger-soft',
+  },
+  render: buttonTemplate,
+};
+
+export const Ghost = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Ghost',
+    variant: 'ghost',
   },
   render: buttonTemplate,
 };
