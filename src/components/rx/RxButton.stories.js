@@ -19,10 +19,16 @@ export default {
       options: ['sm', 'md', 'lg'],
     },
     text: { 
-      control: 'text',
+      control: 'html',
       description: 'Inner text content of the button'
     },
-    onClick: { action: 'clicked', description: 'Triggered when the button is clicked' }
+    onClick: { action: 'clicked', description: 'Triggered when the button is clicked' },
+    fullWidth: {
+      control: {type: 'boolean'}
+    },
+    isIconOnly: {
+      control: {type: 'boolean'}
+    }
   },
   tags: ["radix"]
 };
@@ -30,6 +36,8 @@ export default {
 const buttonTemplate = (args) => html`
   <rx-button 
     ?disabled=${args.disabled} 
+    full-width=${args.fullWidth ? args.fullWidth : nothing}
+    is-icon-only=${args.isIconOnly ? args.isIconOnly : nothing}
     type=${args.type ? args.type : nothing}
     size=${args.size ? args.size : nothing}
     variant=${args.variant ? args.variant : nothing}
@@ -68,6 +76,16 @@ export const Tertiary = {
   render: buttonTemplate,
 };
 
+export const Warning = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Warning',
+    variant: 'danger',
+  },
+  render: buttonTemplate,
+};
+
 export const Danger = {
   args: {
     disabled: false,
@@ -94,6 +112,26 @@ export const Ghost = {
     type: null,
     text: 'Ghost',
     variant: 'ghost',
+  },
+  render: buttonTemplate,
+};
+
+export const fullWidth = {
+  args: {
+    disabled: false,
+    type: null,
+    text: 'Full Width',
+    fullWidth: true
+  },
+  render: buttonTemplate,
+};
+
+export const isIconOnly = {
+  args: {
+    disabled: false,
+    type: null,
+    text: html`<lean-icon name="home"> lkjdfd</lean-icon>`,
+    isIconOnly: false
   },
   render: buttonTemplate,
 };

@@ -210,13 +210,13 @@ export class BaseComponent extends HTMLElement {
 /** ICON COMPONENT */
 
 export class AvIcon extends BaseComponent {
-  static get observedAttributes () { return ['name', 'class']; }
+  static get observedAttributes () { return ['name', 'icon', 'class', 'className']; }
 
   render () {
-    const iconName = this.getAttribute('name') || 'blank';
-    const className = this.getAttribute('class') || 'text-xl';
+    const iconName = this.getAttribute('name') || this.getAttribute('icon') || 'blank';
+    const className = this.getAttribute('class') || this.getAttribute('className') || '';
 
-    return html`<i class="app-icon inline-block leading-none fill-none icon-${iconName} ${className}"></i>`;
+    return html`<i class="app-icon inline-block leading-none fill-none text- align-middle icon-${iconName} ${className}"></i>`;
   }
 }
 

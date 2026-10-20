@@ -112,7 +112,7 @@ const preview: Preview = {
         sourceState: 'shown',
       },
       source: {
-        type: 'dynamic',
+        type: 'html',
         transform: (source: string, storyContext: StoryContext) => {
           const theme = storyContext?.globals?.cssTheme;
           const cleanSource = typeof source === 'string' ? source : '';

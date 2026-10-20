@@ -2,7 +2,7 @@ import { BaseComponent } from '../AvrintComponent.js';
 
 export class RxButton extends BaseComponent {
   static get observedAttributes() {
-    return ['disabled', 'className', 'variant', 'size', 'type'];
+    return ['disabled', 'className', 'variant', 'size', 'type', 'full-width', 'is-icon-only'];
   }
 
   static get observedEvents() {
