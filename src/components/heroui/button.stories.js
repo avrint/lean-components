@@ -1,8 +1,8 @@
 import { html, nothing } from '../AvrintComponent.js';
-import './RxButton.js';
+import './button.js';
  
 export default {
-  title: 'WebComponents/Radix/Button',
+  title: 'WebComponents/HeroUI/Button',
   argTypes: {
     disabled: { control: 'boolean' },
     type: { 
@@ -34,7 +34,7 @@ export default {
 };
 
 const buttonTemplate = (args) => html`
-  <rx-button 
+  <hu-button 
     ?disabled=${args.disabled} 
     full-width=${args.fullWidth ? args.fullWidth : nothing}
     is-icon-only=${args.isIconOnly ? args.isIconOnly : nothing}
@@ -44,7 +44,7 @@ const buttonTemplate = (args) => html`
     @click=${args.onClick}
   >
     ${args.text}
-  </rx-button>
+  </hu-button>
 `;
 
 export const Primary = {
@@ -66,22 +66,13 @@ export const Secondary = {
   render: buttonTemplate,
 };
 
+
 export const Tertiary = {
   args: {
     disabled: false,
     type: null,
     text: 'Tertiary',
     variant: 'tertiary',
-  },
-  render: buttonTemplate,
-};
-
-export const Warning = {
-  args: {
-    disabled: false,
-    type: null,
-    text: 'Warning',
-    variant: 'danger',
   },
   render: buttonTemplate,
 };

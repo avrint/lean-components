@@ -1,4 +1,5 @@
 /* Button component styles */
+@import "tailwindcss";
 
 /* Base button styles */
 .button {

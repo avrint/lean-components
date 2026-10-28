@@ -18,10 +18,30 @@
   <link href="./style/main.css" rel="stylesheet">
 </head>
 
-<body class="bg-accent-800">
+<body class="bg-accent-200">
   <div id="app">
     <h1>Vite + Web Components</h1>
-    <hover-menu></hover-menu>
+    <hu-accordion single >
+      <details open >
+        <summary>First Accordion Item</summary>
+        <p>This content is automatically wrapped and styled by the accordion component.</p>
+      </details>
+
+      <details>
+        <summary>Second Accordion Item</summary>
+        <p>Something small enough to escape casual notice.</p>
+      </details>
+
+      <details>
+        <summary>Third Accordion Item</summary>
+        <p>Something small enough to escape casual notice.</p>
+      </details>
+
+      <details>
+        <summary>Fourth Accordion Item</summary>
+        <p>Something small enough to escape casual notice.</p>
+      </details>
+    </hu-accordion>
     <html-include src="./sections/product-grid.fragment.html" title="Featured Products">
       <data>
         {
@@ -75,8 +95,9 @@
       
     </html-include>
   </div>
+  <script type="module" src="./components/heroui/button.js"></script>
   <script type="module" src="./components/uiverse/HoverTooltipButtons.js"></script>
-  <script type="module" src="./components/rx/RxButton.js"></script>
+  <script type="module" src="./components/heroui/accordion.js"></script>
 </body>
 
 </html>

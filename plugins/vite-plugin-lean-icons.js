@@ -2,17 +2,55 @@ import fs from 'fs-extra';
 import path from 'path';
 import { glob } from 'glob';
 import { generateFonts } from 'fantasticon';
+import crypto from 'crypto';
 
 const masterDir = path.resolve('src/icons');
 const defaultOutputDir = path.resolve('src/assets/fonts');
+const cacheMetaPath = path.resolve('.tmp/icons/.cache-meta.json');
+
+/**
+ * Calculates a unique hash representing the current state of all master SVGs.
+ */
+async function getIconsHash(allMasterSvgs) {
+  const hash = crypto.createHash('md5');
+  
+  for (const svgPath of allMasterSvgs) {
+    const stats = await fs.stat(svgPath);
+    // Include path, file size, and last modified time in the hash calculation
+    hash.update(`${svgPath}:${stats.size}:${stats.mtimeMs}`);
+  }
+  
+  return hash.digest('hex');
+}
 
 async function generateFullFont(outputDir) {
   await fs.ensureDir(outputDir);
 
-  console.log('✨ [lean-icons] Generating full icon font asynchronously...');
-
   const allMasterSvgs = await glob('src/icons/**/*.svg', { absolute: true });
   allMasterSvgs.sort();
+
+  // 1. Check if source icons have changed
+  const currentHash = await getIconsHash(allMasterSvgs);
+  let cachedHash = null;
+
+  if (await fs.pathExists(cacheMetaPath)) {
+    try {
+      const meta = await fs.readJson(cacheMetaPath);
+      cachedHash = meta.hash;
+    } catch (e) {
+      // Ignore read errors, proceed with generation
+    }
+  }
+
+  // Also verify that the actual output font files exist
+  const fontFileExists = await fs.pathExists(path.join(outputDir, 'app-icons.woff2'));
+
+  if (currentHash === cachedHash && fontFileExists) {
+    console.log('⚡ [lean-icons] Source icons unchanged. Skipping full icon font generation.');
+    return;
+  }
+
+  console.log('✨ [lean-icons] Generating full icon font asynchronously...');
 
   const codepoints = {};
   let currentCodePoint = 0xe000;
@@ -35,8 +73,12 @@ async function generateFullFont(outputDir) {
     normalize: true,
     codepoints
   });
+
+  // Save the new hash to cache meta
+  await fs.ensureDir(path.dirname(cacheMetaPath));
+  await fs.writeJson(cacheMetaPath, { hash: currentHash });
   
-  // console.log('✨ [lean-icons] Full icon font generated successfully.');
+  console.log('✨ [lean-icons] Full icon font generated successfully.');
 }
 
 async function optimizeFontFromDist(distDir, finalOutputDir) {
@@ -72,13 +114,10 @@ async function optimizeFontFromDist(distDir, finalOutputDir) {
     for (const slug of iconMap.keys()) {
       const match = new RegExp(`["'](${slug})["']`, "g").test(content);
       if (match) {
-        // console.info(`matched slug: '${slug}' in '${file}'`);
         usedIcons.add(slug);
       }
     }
   }
-
-  // console.info(`🔍 [lean-icons] Found ${usedIcons.size} used icons in dist bundle.`);
 
   // Fallback safety if none detected
   if (usedIcons.size === 0 && iconMap.size > 0) {
@@ -109,7 +148,7 @@ async function optimizeFontFromDist(distDir, finalOutputDir) {
       assetTypes: ['css', 'json'],
       name: 'app-icons',
       normalize: true,
-      codepoints: globalCodepoints // <--- THIS FIXES IT! Passes the exact same mapping.
+      codepoints: globalCodepoints
     });
 
     // Find Vite's hashed font files in dist/assets
@@ -121,7 +160,6 @@ async function optimizeFontFromDist(distDir, finalOutputDir) {
       const optimizedWoff2 = path.join(finalOutputDir, 'app-icons.woff2');
       if (await fs.pathExists(optimizedWoff2)) {
         await fs.copy(optimizedWoff2, hashedWoff2Files[0], { overwrite: true });
-        // console.info(`✅ [lean-icons] Overrode hashed woff2: ${path.basename(hashedWoff2Files[0])}`);
       }
     }
       
@@ -130,7 +168,6 @@ async function optimizeFontFromDist(distDir, finalOutputDir) {
       const optimizedWoff = path.join(finalOutputDir, 'app-icons.woff');
       if (await fs.pathExists(optimizedWoff)) {
         await fs.copy(optimizedWoff, hashedWoffFiles[0], { overwrite: true });
-        // console.info(`✅ [lean-icons] Overrode hashed woff: ${path.basename(hashedWoffFiles[0])}`);
       }
     }
 
@@ -161,7 +198,6 @@ export default function leanIconsPlugin() {
     async closeBundle() {
       if (viteCommand === 'build' && !hasRun) {
         hasRun = true;
-        // console.info('⚡ [lean-icons] Post-build optimization starting...');
         const distDir = path.resolve('dist');
         const finalOutputDir = path.resolve('dist/assets/fonts');
         await optimizeFontFromDist(distDir, finalOutputDir);
@@ -170,11 +206,18 @@ export default function leanIconsPlugin() {
     configureServer(server) {
       server.watcher.on('add', async (filePath) => {
         if (filePath.includes('src/icons/')) {
+          // Invalidate cache or let generateFullFont check hashes
           await generateFullFont(defaultOutputDir);
           server.ws.send({ type: 'full-reload' });
         }
       });
       server.watcher.on('unlink', async (filePath) => {
+        if (filePath.includes('src/icons/')) {
+          await generateFullFont(defaultOutputDir);
+          server.ws.send({ type: 'full-reload' });
+        }
+      });
+      server.watcher.on('change', async (filePath) => {
         if (filePath.includes('src/icons/')) {
           await generateFullFont(defaultOutputDir);
           server.ws.send({ type: 'full-reload' });

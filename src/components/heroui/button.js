@@ -1,6 +1,6 @@
 import { BaseComponent } from '../AvrintComponent.js';
 
-export class RxButton extends BaseComponent {
+export class Button extends BaseComponent {
   static get observedAttributes() {
     return ['disabled', 'className', 'variant', 'size', 'type', 'full-width', 'is-icon-only'];
   }
@@ -12,14 +12,15 @@ export class RxButton extends BaseComponent {
   constructor() {
     super();
 
-    this.event('click', 'rx-button', (e, target) => {
+    console.info('initialized:button');
+    this.event('click', 'hu-button', (e, target) => {
       if (this.hasAttribute('disabled')) {
         e.preventDefault();
         e.stopImmediatePropagation();
       }
     }, true);
 
-    this.event('keydown', 'rx-button', (e, target) => {
+    this.event('keydown', 'hu-button', (e, target) => {
       if (this.hasAttribute('disabled')) return;
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -37,7 +38,7 @@ export class RxButton extends BaseComponent {
     
     const fullWidth = this.hasAttribute('full-width') ? 'button--full-width' : '';
     const isIconOnly = this.hasAttribute('is-icon-only') ? 'button--icon-only' : '';
-
+    
     return this.html`
       <button 
         class="button button--${variant} button--${size} ${fullWidth} ${isIconOnly} ${className}"
@@ -45,10 +46,10 @@ export class RxButton extends BaseComponent {
         ?disabled="${isDisabled}"
         aria-disabled="${isDisabled ? 'true' : 'false'}"
       >
-        <slot></slot>
+       <slot></slot>
       </button>
     `;
   }
 }
 
-RxButton.register('rx-button');
+Button.register('hu-button');
